@@ -13,10 +13,10 @@ class ProfilApi {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['message'] = message;
-    _data['data'] = data.toJson();
-    return _data;
+    final datax = <String, dynamic>{};
+    datax['message'] = message;
+    datax['data'] = data.toJson();
+    return datax;
   }
 }
 
@@ -52,15 +52,15 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['email'] = email;
-    _data['username'] = username;
-    _data['name'] = name;
-    _data['birthday'] = birthday;
-    _data['horoscope'] = horoscope;
-    _data['height'] = height;
-    _data['weight'] = weight;
-    _data['interests'] = interests;
-    return _data;
+    final data = <String, dynamic>{};
+    data['email'] = email;
+    data['username'] = username;
+    data['name'] = name;
+    data['birthday'] = birthday;
+    data['horoscope'] = horoscope;
+    data['height'] = height;
+    data['weight'] = weight;
+    data['interests'] = interests;
+    return data;
   }
 }

@@ -20,7 +20,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final result = await servicesApi.login(email: event.email, password: event.password);
         if(result.statusCode == 201){
           Map<String,dynamic> data = result.data;
-          log.i(data['access_token']);
           if(data['access_token'] != null){
             pref.setBool("login", true);
             pref.setString("token",data['access_token']);

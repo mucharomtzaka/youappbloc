@@ -91,6 +91,7 @@ class _LoginState extends State<Login> {
                   fontWeight: FontWeight.w700,fontSize: 24),),
                   const SizedBox(height: 15,),
                   TextFormField(
+                    key: const Key('emaillogin'),
                     style: const TextStyle(color: Colors.white),
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -117,6 +118,7 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(height: 15,), 
                   TextFormField(
+                     key: const Key('passwordlogin'),
                     style: const TextStyle(color: Colors.white),
                     controller: passwordController,
                     obscureText: visible_password,
@@ -149,6 +151,7 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 15,),
                   GestureDetector(
                     child: Container(
+                      key: const Key("btnLogin"),
                       height: 44,
                       padding: const EdgeInsets.fromLTRB(10.0, 6.0, 10.0, 6.0),
                       decoration: BoxDecoration(
@@ -175,7 +178,9 @@ class _LoginState extends State<Login> {
                     children: [
                       const Text("No account?",style: TextStyle(color: Colors.white),),
                       const SizedBox(width: 10,),
-                      GestureDetector(child:  Text("Register here",style: TextStyle(color: HexColor("#FFD700")),
+                      GestureDetector(
+                        key: const Key('btnRegister'),
+                      child:  Text("Register here",style: TextStyle(color: HexColor("#FFD700")),
           
                       ),onTap: (){
         Navigator.push(

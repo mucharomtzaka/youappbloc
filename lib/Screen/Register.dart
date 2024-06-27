@@ -72,6 +72,7 @@ class _RegisterState extends State<Register> {
                   fontWeight: FontWeight.w700,fontSize: 24),),
                   const SizedBox(height: 15,),
                   TextFormField(
+                    key: const Key('emailRegister'),
                     style: const TextStyle(color: Colors.white),
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -97,6 +98,7 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 15,), 
                   TextFormField(
+                    key: const Key('usernameRegister'),
                     style: const TextStyle(color: Colors.white),
                     controller: UsernameController,
                     keyboardType: TextInputType.text,
@@ -122,6 +124,7 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 15,), 
                   TextFormField(
+                    key: const Key('passwordRegister'),
                     style: const TextStyle(color: Colors.white),
                     controller: passwordController,
                     obscureText: visible_password,
@@ -153,6 +156,7 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 15,),
                   TextFormField(
+                    key: const Key('confirmRegister'),
                     style: const TextStyle(color: Colors.white),
                     controller: confirmaController,
                     obscureText: visible_confirmpass,
@@ -187,6 +191,7 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 15,),
                   GestureDetector(
+                    key: const Key('btnRegistertext'),
                     child: Container(
                       height: 44,
                       padding: const EdgeInsets.fromLTRB(10.0, 6.0, 10.0, 6.0),
@@ -213,7 +218,9 @@ class _RegisterState extends State<Register> {
                     children: [
                       const Text("Have an account?",style: TextStyle(color: Colors.white),),
                       const SizedBox(width: 10,),
-                      GestureDetector(child:  Text("Login here",style: TextStyle(color: HexColor("#FFD700")),
+                      GestureDetector(
+                        key: const Key('LoginRegister'),
+                        child:  Text("Login here",style: TextStyle(color: HexColor("#FFD700")),
                       ),onTap: (){
                         Navigator.push(
                           context,MaterialPageRoute(builder: (_) => const Login()));

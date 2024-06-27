@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+#note 
+- Implement BLOC in Flutter or Implement routes.
+- Usage of good design patterns & architecture patterns.
+- Build and Connect with API
+- Document Api : https://techtest.youapp.ai/api-docs#/
+ unit test intergation  : flutter test integration_test/app_test.dart 
+

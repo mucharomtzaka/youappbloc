@@ -168,7 +168,7 @@ class _HomeState extends State<Home> {
                           ),
                           const SizedBox(height: 20,),
                           operationsState is ProfilLoaded ?
-                          operationsState.model.data.interests.length > 0 ?
+                          operationsState.model.data.interests.isNotEmpty ?
                            Row(
                             children: operationsState.model.data.interests.map((e)=>
                              Container(
