@@ -9,8 +9,6 @@ import '../../Repository/ServicesApi.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
-
-
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ServicesApi servicesApi;
    var log = Logger();
@@ -22,6 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final result = await servicesApi.login(email: event.email, password: event.password);
         if(result.statusCode == 201){
           Map<String,dynamic> data = result.data;
+          log.i(data['access_token']);
           if(data['access_token'] != null){
             pref.setBool("login", true);
             pref.setString("token",data['access_token']);
@@ -48,7 +47,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(LoginLoading());
       var pref = await SharedPreferences.getInstance();
       pref.clear();
-      emit(LoginInitial());
+      emit( LoginInitial());
     });
   }
 }

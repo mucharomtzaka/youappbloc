@@ -48,4 +48,18 @@ class ServicesApi{
     return response;
   }
 
+  // fetch profils
+  Future<Response> getProfil(
+      {required String token}) async {
+      Response response = await dioClient.get(
+            "$baseUrl/api/getProfile",
+            options: Options(
+              headers: {
+                "Content-Type": "application/json",
+                "x-access-token": token
+              },
+            ),
+          );
+    return response;
+  }
 }

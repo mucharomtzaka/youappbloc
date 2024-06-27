@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myapp/Repository/ServicesApi.dart';
-import 'package:myapp/Screen/Login.dart';
-import 'package:myapp/data/observer/bloc_observer.dart';
+import 'Repository/ServicesApi.dart';
+import 'Screen/Login.dart';
+import 'data/observer/bloc_observer.dart';
 import 'Logic/Login/login_bloc.dart';
 import 'Logic/Register/register_bloc.dart';
+import 'Logic/Profil/profil_bloc.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         ),
          BlocProvider(
           create: (context) => RegisterBloc(servicesApi: servicesApi),
+        ),
+         BlocProvider(
+          create: (context) => ProfilBloc(servicesApi: servicesApi),
         ),
       ],
       child: MaterialApp(
