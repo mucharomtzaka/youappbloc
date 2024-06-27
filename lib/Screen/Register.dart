@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:myapp/Logic/Register/register_bloc.dart';
 import 'package:myapp/Screen/Login.dart';
+
+import '../Widget/dialog/show_info_dialog.dart';
+import '../Widget/helper.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -22,20 +27,24 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    var Register = context.read<RegisterBloc>();
     return Scaffold(
-      body: Form(
+      body: BlocConsumer<RegisterBloc,RegisterState>(
+        bloc: Register,
+        builder: (context,state){
+        return Form(
           key: formKey,
           child: Container(
             height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
-                gradient: RadialGradient(
-                  colors: [
-                    HexColor("#1F4247"),
-                    HexColor("#0D1D23"),
-                    HexColor("#09141A")],
-                    radius: 0.75,
-                ),
-              
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      HexColor("#1F4247"),
+                      HexColor("#0D1D23"),
+                      HexColor("#09141A")],
+                  ),
               ),
             child: Column(children: [
               const SizedBox(height: 20,),
@@ -189,6 +198,7 @@ class _RegisterState extends State<Register> {
                     ),
                     onTap: (){
                       if(formKey.currentState!.validate()){
+                        Register.add(TryRegister(email: emailController.text, username: UsernameController.text, password: passwordController.text));
                       }
                     },
                   ),
@@ -209,7 +219,24 @@ class _RegisterState extends State<Register> {
               ))
             ],),
           ),
-                ),
+                );
+      }, listener: (context,state) async{
+        if (state is RegisterLoaded) {
+                    String data = state.message;
+                    WidgetHelper.showSnackBarFun(context, data, Colors.green);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Login()),
+                    );
+                  }
+                  else if (state is RegisterError) {
+                    await showInfoDialog(
+                        title: "Error",
+                        message: state.error,
+                        buildContext: context);
+                  }
+      }),
     );
   }
 }

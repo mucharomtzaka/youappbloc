@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/Repository/ServicesApi.dart';
 import 'package:myapp/Screen/Login.dart';
 import 'package:myapp/data/observer/bloc_observer.dart';
-
 import 'Logic/Login/login_bloc.dart';
+import 'Logic/Register/register_bloc.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
@@ -24,7 +24,10 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => LoginBloc(servicesApi: servicesApi),
-        )
+        ),
+         BlocProvider(
+          create: (context) => RegisterBloc(servicesApi: servicesApi),
+        ),
       ],
       child: MaterialApp(
         title: 'YouApp',
