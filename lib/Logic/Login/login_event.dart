@@ -17,8 +17,5 @@ class TryLogin extends LoginEvent {
 }
 
 class Logout extends LoginEvent {
-  final String token;
-  const Logout({
-    required this.token,
-  });
+  
 }
