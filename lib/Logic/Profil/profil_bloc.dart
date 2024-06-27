@@ -1,4 +1,6 @@
+
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -18,11 +20,10 @@ class ProfilBloc extends Bloc<ProfilEvent,ProfilState>{
       emit(ProfilLoading());
       try{
           var pref = await SharedPreferences.getInstance();
-          final result = await servicesApi.getProfil(token: pref.getString("token").toString());
-           log.i(result.data);
+          final result = await servicesApi.getProfil(token: pref.getString("token")!);
           if(result.statusCode == 200){
-           
-            emit(ProfilLoaded(model: ProfilApi.fromJson(jsonDecode(result.data))));
+            Map<String,dynamic> responseMap = jsonDecode(jsonEncode(result.data));
+            emit(ProfilLoaded(model: ProfilApi.fromJson(responseMap)));
           }else{
             emit(ProfilError(error: result.data['message']));
           }

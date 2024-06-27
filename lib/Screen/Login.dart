@@ -111,7 +111,8 @@ class _LoginState extends State<Login> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
                             ),
-                            errorStyle: const TextStyle(color: Colors.white)
+                            errorStyle: const TextStyle(color: Colors.white),
+                            focusColor: Colors.white
                           ),
                   ),
                   const SizedBox(height: 15,), 

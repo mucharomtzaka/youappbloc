@@ -1,10 +1,11 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:myapp/Logic/Register/register_bloc.dart';
-import 'package:myapp/Screen/Login.dart';
-
+import '../Logic/Register/register_bloc.dart';
+import '../Screen/Login.dart';
 import '../Widget/dialog/show_info_dialog.dart';
 import '../Widget/helper.dart';
 
@@ -47,20 +48,24 @@ class _RegisterState extends State<Register> {
                   ),
               ),
             child: Column(children: [
-              const SizedBox(height: 20,),
+              const SizedBox(height: 50,),
               GestureDetector(
-                child: const Row(
-                  children: [
-                  Icon(Icons.arrow_back_ios_new,color: Colors.white,),
-                  Text("Back",style: TextStyle(color: Colors.white,fontSize: 14),),
-                ],),
+                child: const Padding(
+                  padding:   EdgeInsets.only(left: 20),
+                  child:  Row(
+                    children: [
+                    Icon(Icons.arrow_back_ios_new,color: Colors.white,),
+                    SizedBox(width: 10,),
+                    Text("Back",style: TextStyle(color: Colors.white,fontSize: 14),),
+                  ],),
+                ),
                 onTap: (){
                   Navigator.pop(context);
                 },
               ),
-              const SizedBox(height: 10,),
+              
               Expanded(child: ListView(
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(20),
                 children: [
                   const SizedBox(height: 50,),
                   const Text("Register",style: TextStyle(color: Colors.white,

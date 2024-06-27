@@ -1,5 +1,5 @@
 // ignore_for_file: unused_local_variable
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -41,13 +41,15 @@ class _HomeState extends State<Home> {
                    return BlocConsumer<ProfilBloc, ProfilState>(
                      listener: (operationsContext, operationsState) {
                        if(operationsState is ProfilError){
-                         String data = operationsState.error;
-                            WidgetHelper.showSnackBarFun(operationsContext, data, Colors.red);
+                         
                        }
                      },
             builder: (operationsContext, operationsState) {
+                  if(operationsState is ProfilError){
+                    context.read<LoginBloc>().add(Logout());
+                  }
                  return Container(
-                height: MediaQuery.of(context).size.height,
+                 height: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topRight,
@@ -75,11 +77,115 @@ class _HomeState extends State<Home> {
                               context.read<LoginBloc>().add(Logout());
                             },
                           ),
-                          Text(operationsState is ProfilLoaded ? operationsState.model.data.username.toString() : "test",style: const TextStyle(color: Colors.white,fontSize: 14),),
+                          Text(operationsState is ProfilLoaded ? "@${operationsState.model.data.username}" : "@test",style: const TextStyle(color: Colors.white,fontSize: 14),),
                           IconButton(onPressed: (){
                           }, icon: const Icon(Icons.more_horiz,color: Colors.white,))
                       ],),
                       const SizedBox(height: 10,),
+                      Stack(
+                          children: [
+                      CachedNetworkImage(
+                        imageUrl: "https://cmsc426.github.io/assets/pano/delicate-arch-pano.jpg",
+                        imageBuilder: (context, imageProvider) =>  Container(
+                        height: 190,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: HexColor("#1F4247"),
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                        ),
+                      ) ,
+                      errorWidget: (context, url, error) => Container(
+                        height: 190,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: HexColor("#1F4247"),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      placeholder: (context, url) => Container(
+                        height: 190,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: HexColor("#1F4247"),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const SizedBox(),
+                      )),
+                      Positioned(
+                              left: 10,
+                              bottom: 10,
+                              child: Text(operationsState is ProfilLoaded ?  "@${operationsState.model.data.username}," : "@test,",style: const TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w700),)),
+                          ],
+                        ),
+                      const SizedBox(height: 15,),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: HexColor("#09141A"),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                             const Text('About',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),),
+                              IconButton(onPressed: (){
+
+                              }, icon: const Icon(Icons.edit,color: Colors.white))
+                            ],
+                          ),
+                          const SizedBox(height: 10,),
+                          operationsState is ProfilLoaded ? operationsState.model.data.birthday.isNotEmpty && operationsState.model.data.horoscope.isNotEmpty 
+                          && operationsState.model.data.height == 0 && operationsState.model.data.weight == 0
+                          ? const Text("Add in your your to help others know you better",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),) : const SizedBox() : const SizedBox(),
+                           operationsState is ProfilLoaded ? operationsState.model.data.birthday.isEmpty ? const SizedBox() : Text("Birthday : ${operationsState.model.data.birthday}",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700),)  : const SizedBox(),
+                           operationsState is ProfilLoaded ? operationsState.model.data.horoscope.isEmpty ? const SizedBox() : Text("Horoscope : ${operationsState.model.data.horoscope}",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700),)  : const SizedBox(),
+                           operationsState is ProfilLoaded ? operationsState.model.data.height == 0 ? const SizedBox() : Text("Height : ${operationsState.model.data.height} cm",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700),)  : const SizedBox(),
+                           operationsState is ProfilLoaded ? operationsState.model.data.weight == 0 ? const SizedBox() : Text("Weight : ${operationsState.model.data.weight} kg",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700),)  : const SizedBox()
+                        ],),
+                      ),
+                      const SizedBox(height: 15,),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: HexColor("#09141A"),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('Interest',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),),
+                              IconButton(onPressed: (){
+
+                              }, icon: const Icon(Icons.edit,color: Colors.white))
+                            ],
+                          ),
+                          const SizedBox(height: 20,),
+                          operationsState is ProfilLoaded ?
+                          operationsState.model.data.interests.length > 0 ?
+                           Row(
+                            children: operationsState.model.data.interests.map((e)=>
+                             Container(
+                              padding: const EdgeInsets.all(14),
+                              margin: const EdgeInsets.only(right: 10),
+                              decoration: BoxDecoration(
+                          color: HexColor("#1F4247"),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                               child: Text(e,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700),),
+                              ),
+                            ).toList(),
+                          ) : const Text('Add in your interest to find a better match',
+                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),) : 
+                         const SizedBox(),
+                        ],),
+                      ),
                     ],
                   ),
               );
