@@ -2,7 +2,6 @@ part of 'profil_bloc.dart';
 
 class ProfilState extends Equatable {
   const ProfilState();
-
   @override
   List<Object> get props => [];
 }

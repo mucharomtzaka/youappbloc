@@ -7,6 +7,7 @@ import 'package:hexcolor/hexcolor.dart';
 import '../Logic/Profil/profil_bloc.dart';
 import '../Logic/Login/login_bloc.dart';
 import '../Widget/helper.dart';
+import 'Interest.dart';
 import 'Login.dart';
 
 class Home extends StatefulWidget {
@@ -33,9 +34,8 @@ class _HomeState extends State<Home> {
   }
 
   void refreshdata(context){
-    context.read<ProfilBloc>().add(GetProfil());
+    BlocProvider.of<ProfilBloc>(context).add(GetProfil());
   }
-
   @override
   Widget build(BuildContext context) {
     var bloc = BlocProvider.of<ProfilBloc>(context);
@@ -54,12 +54,10 @@ class _HomeState extends State<Home> {
                   }
                 },
                 builder: (context, state) {
-                   
                    return BlocConsumer<ProfilBloc, ProfilState>(
                     bloc: bloc,
                      listener: (operationsContext, operationsState) {
                        if(operationsState is ProfilLoaded){
-                         
                          displayname.text = operationsState.model.data.username;
                          birthday.text = operationsState.model.data.birthday;
                          height.text = operationsState.model.data.height.toString();
@@ -69,9 +67,12 @@ class _HomeState extends State<Home> {
                          String data = operationsState.success;
                             WidgetHelper.showSnackBarFun(context, data, Colors.green);
                        }
+                       if(operationsState is ProfilError){
+                         String data = operationsState.error;
+                            WidgetHelper.showSnackBarFun(context, data, Colors.red);
+                       }
                      },
             builder: (operationsContext, operationsState) {
-                
                  return Container(
                  height: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
@@ -165,25 +166,28 @@ class _HomeState extends State<Home> {
                                   });
                                 }, icon: const Icon(Icons.edit,color: Colors.white)) : TextButton(onPressed: () async{
                         
-                                  if(formKeyEdit.currentState!.validate()){
+                                  if(formKeyEdit.currentState!.validate()){ 
+                                     
                                     bloc.add(EditProfil(displayname: displayname.text, birthday: birthday.text, height: height.text, weight: weight.text));
-                                   
-                                    setState(() {
-                                      EditProfile = !EditProfile;
-                                    });
-
+                                  
                                      WidgetsBinding.instance.addPostFrameCallback((callback){
-                                      refreshdata(context);
+                                       setState(() {
+                                      EditProfile = !EditProfile;
+                                       refreshdata(context);
+                                     });
+                                    
                                     });
                                   }                      
                                 }, child: const Text("Save & Update",style: TextStyle(color: Colors.white),))
                               ],
                             ),
                             const SizedBox(height: 10,),
-                            operationsState is ProfilLoaded ? operationsState.model.data.birthday.isNotEmpty && operationsState.model.data.horoscope.isNotEmpty 
-                            && operationsState.model.data.height == 0 && operationsState.model.data.weight == 0
+                            operationsState is ProfilLoaded ? 
+                            operationsState.model.data.birthday.isEmpty 
+                            && operationsState.model.data.horoscope.isEmpty 
+                            && operationsState.model.data.height == 0 
+                            && operationsState.model.data.weight == 0
                             ? const Text("Add in your your to help others know you better",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),) : const SizedBox() : const SizedBox(),
-
                              EditProfile == true ? _widgetEditProfile(operationsState,context) : _widgetProfile(operationsState)
                           ],),
                         ),
@@ -203,7 +207,7 @@ class _HomeState extends State<Home> {
                             children: [
                               const Text('Interest',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),),
                               IconButton(onPressed: (){
-
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => const Interest()));
                               }, icon: const Icon(Icons.edit,color: Colors.white))
                             ],
                           ),

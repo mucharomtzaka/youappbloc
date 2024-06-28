@@ -84,4 +84,21 @@ class ServicesApi{
           );
     return response;
   }
+
+  Future<Response> EditInterest(
+      {required List<String> interest,required String token}) async {
+        Response response = await dioClient.put(
+                    "$baseUrl/api/updateProfile",
+                    options: Options(
+                      headers: {
+                        "Content-Type": "application/json",
+                        "x-access-token": token
+                      },
+                    ),
+                    data: {
+                      "interests": interest
+                    },
+          );
+    return response;
+      }
 }

@@ -27,17 +27,19 @@ class Data {
     required this.name,
     required this.birthday,
     required this.horoscope,
+    required this.zodiac,
     required this.height,
     required this.weight,
     required this.interests,
   });
-  late final String email;
-  late final String username;
-  late final String name;
-  late final String birthday;
-  late final String horoscope;
-  late final int height;
-  late final int weight;
+  late String email;
+  late String username;
+  late String name;
+  late String birthday;
+  late String horoscope;
+  late String zodiac;
+  late int height;
+  late int weight;
   late final List<String> interests;
   
   Data.fromJson(Map<String, dynamic> json){
@@ -46,6 +48,7 @@ class Data {
     name = json['name'];
     birthday = json['birthday'];
     horoscope = json['horoscope'];
+    zodiac   = json['zodiac'];
     height = json['height'];
     weight = json['weight'];
     interests = List.castFrom<dynamic, String>(json['interests']);
@@ -59,6 +62,7 @@ class Data {
     data['birthday'] = birthday;
     data['horoscope'] = horoscope;
     data['height'] = height;
+    data['zodiac'] = zodiac;
     data['weight'] = weight;
     data['interests'] = interests;
     return data;

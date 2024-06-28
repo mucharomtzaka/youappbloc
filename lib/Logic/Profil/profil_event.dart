@@ -16,3 +16,10 @@ class EditProfil extends ProfilEvent {
     required this.weight
   });
 }
+
+class AddInterest extends ProfilEvent {
+  final List<String> interest;
+  const AddInterest({
+    required this.interest
+  });
+}
