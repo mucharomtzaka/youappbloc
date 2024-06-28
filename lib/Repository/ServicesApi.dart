@@ -62,4 +62,26 @@ class ServicesApi{
           );
     return response;
   }
+
+  //edit profils 
+  Future<Response> EditProfils(
+      {required String displayname,required String birthday, required int height,required int weight,required String token}) async {
+      Response response = await dioClient.put(
+            "$baseUrl/api/updateProfile",
+            options: Options(
+              headers: {
+                "Content-Type": "application/json",
+                 "x-access-token": token
+              },
+            ),
+            data: {
+              "name": displayname,
+              "birthday":birthday,
+              "height": height,
+              "weight":weight,
+              "interests": []
+            },
+          );
+    return response;
+  }
 }

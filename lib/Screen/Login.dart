@@ -150,8 +150,8 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(height: 15,),
                   GestureDetector(
+                    key: const Key("btnLogin"),
                     child: Container(
-                      key: const Key("btnLogin"),
                       height: 44,
                       padding: const EdgeInsets.fromLTRB(10.0, 6.0, 10.0, 6.0),
                       decoration: BoxDecoration(

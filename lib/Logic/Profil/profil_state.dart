@@ -13,7 +13,7 @@ class ProfilLoading extends ProfilState {}
 
 class ProfilLoaded extends ProfilState {
  final ProfilApi model;
-  const ProfilLoaded({
+   const ProfilLoaded({
     required this.model,
   });
 }
@@ -22,5 +22,12 @@ class ProfilError extends ProfilState {
   final String error;
   const ProfilError({
     required this.error,
+  });
+}
+
+class ProfilSuccess extends ProfilState {
+  final String success;
+  const ProfilSuccess({
+    required this.success,
   });
 }

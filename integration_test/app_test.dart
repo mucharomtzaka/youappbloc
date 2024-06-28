@@ -11,15 +11,19 @@ void main(){
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   Loginrobot loginrobot;
   Registerrobot registerrobot;
+
+   
+
    group('end-to-end test', () {
-    testWidgets('Login', (tester) async {
+    testWidgets('register', (tester) async {
 
       app.main();
 
       await tester.pumpAndSettle();
 
-      registerrobot = Registerrobot(tester);
+      
       loginrobot = Loginrobot(tester);
+      registerrobot = Registerrobot(tester);
 
       //test widget register
       await loginrobot.clickNavigationRegisterButton();
@@ -29,14 +33,13 @@ void main(){
       await registerrobot.setTextFieldPassword();
       await registerrobot.setConfirmPassword();
       await registerrobot.clickNavigationRegisterButtonet();
-      await registerrobot.clickNavigationLoginButtonet();
 
-      //test widget login
-      
+      await registerrobot.clickNavigationLoginButtonet();
       await loginrobot.setTextFieldEmail();
       await loginrobot.setTextFieldPassword();
       await loginrobot.clickNavigationLoginButton();
   
     });
+
    });
 }

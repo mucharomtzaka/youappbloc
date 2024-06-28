@@ -40,5 +40,31 @@ class ProfilBloc extends Bloc<ProfilEvent,ProfilState>{
         }
       }
     });
+    on<EditProfil>((event,emit) async{
+       emit(ProfilLoading());
+       try{
+        var pref = await SharedPreferences.getInstance();
+        final result = await servicesApi.EditProfils(displayname: event.displayname, birthday: event.birthday, height: int.parse(event.height), weight: int.parse(event.weight),token: pref.getString("token")!);
+        log.i(result.data);
+        if(result.statusCode == 200){
+          Map<String,dynamic> responseMap = jsonDecode(jsonEncode(result.data));
+          emit(ProfilLoaded(model: ProfilApi.fromJson(responseMap)));
+          emit(ProfilSuccess(success: result.data['message']));
+        }else{
+          emit(ProfilError(error: result.data['message']));
+        }
+       }catch(e){
+        if (e is DioException) {
+           if(e.response?.statusCode == 401){
+            Map<String, dynamic>? responseMap =
+                e.response?.data as Map<String, dynamic>?;
+            String errorMessage = responseMap?['message'] ?? [];
+            emit(ProfilError(error: errorMessage));
+          }
+        }else{
+          emit(ProfilError(error: e.toString()));
+        }
+      }
+    });
   }
 }

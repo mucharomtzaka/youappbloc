@@ -18,6 +18,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try{
         var pref = await SharedPreferences.getInstance();
         final result = await servicesApi.login(email: event.email, password: event.password);
+        log.i(result.data);
         if(result.statusCode == 201){
           Map<String,dynamic> data = result.data;
           if(data['access_token'] != null){
