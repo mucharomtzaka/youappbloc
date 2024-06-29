@@ -7,12 +7,29 @@ import 'package:textfield_tags/textfield_tags.dart';
 
 
 class Interest extends StatefulWidget {
-  const Interest({super.key});
+  final List<dynamic> interest;
+  const Interest({super.key,required this.interest});
   @override
   State<Interest> createState() => _InterestState();
 }
 
 class _InterestState extends State<Interest> {
+
+  List<String> tags = [];
+  final TextFieldTagsController _tagController  = TextFieldTagsController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    tags = List<String>.from(widget.interest);
+  }
+
+  @override
+  void dispose() {
+    _tagController.dispose();
+    super.dispose();
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -29,7 +46,7 @@ class _InterestState extends State<Interest> {
           HexColor("#D5BE88"),
          ],
     ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
-    List<String> tags = [];
+    
     return Scaffold(
       body: BlocConsumer<ProfilBloc, ProfilState>(
          bloc: bloc
@@ -43,14 +60,7 @@ class _InterestState extends State<Interest> {
                             WidgetHelper.showSnackBarFun(context, data, Colors.red);
                              Navigator.pop(context);
                        }
-                       if(operationsState is ProfilLoaded){
-                         var data = operationsState.model.data.interests;
-                         if(data.isNotEmpty){
-                            tags.clear();
-                            tags.addAll(data);
-                         }
-                       }
-
+                       
                       if(operationsState is ProfilSuccess){
                          String data = operationsState.success;
                             WidgetHelper.showSnackBarFun(context, data, Colors.green);
@@ -98,6 +108,7 @@ class _InterestState extends State<Interest> {
                           const Text('What interest you?',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w700),),
                           const SizedBox(height: 20,),
                           TextFieldTags(
+                            textFieldTagsController: _tagController,
                             textSeparators: const [ 
                                 " ", //seperate with space
                                 ',' //sepearate with comma as well   

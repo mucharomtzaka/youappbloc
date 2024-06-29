@@ -207,7 +207,8 @@ class _HomeState extends State<Home> {
                             children: [
                               const Text('Interest',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),),
                               IconButton(onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => const Interest()));
+                                var interest = operationsState is ProfilLoaded ? operationsState.model.data.interests.isNotEmpty  ? operationsState.model.data.interests : [] : [];  
+                                Navigator.push(context, MaterialPageRoute(builder: (_) =>  Interest(interest : interest))).then((value) => refreshdata(context));
                               }, icon: const Icon(Icons.edit,color: Colors.white))
                             ],
                           ),
